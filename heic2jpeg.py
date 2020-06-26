@@ -23,15 +23,16 @@ except (FileNotFoundError, pyheif.error.HeifError) as e:
     print(e)
     sys.exit(1)
 
+exif_data = b""
+
 if args.exif is True:
-    exif_data = heif_file.metadata[0]["data"]
-else:
-    exif_data = b""
+    for metadata in heif_file.metadata or []:
+        if metadata["type"] == "Exif":
+            exif_data = metadata["data"]
 
 try:
     image = Image.frombytes(mode=heif_file.mode, size=heif_file.size, data=heif_file.data)
     image.save(f"{os.path.splitext(filename)[0]}.jpg", "JPEG", exif=exif_data)
-    sys.exit(0)
 except Exception as e:
     print(e)
     sys.exit(1)
