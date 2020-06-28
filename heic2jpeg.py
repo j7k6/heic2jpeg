@@ -6,11 +6,8 @@ heic2jpeg.py – HEIC to JPEG Converter
 """
 
 from PIL import Image
-from multiprocessing import Pool
-import argparse
-import os
 import pyheif
-import sys
+import os
 
 
 class Heic2Jpeg:
@@ -57,6 +54,9 @@ class Heic2Jpeg:
 
 
 if __name__ == "__main__":
+    from multiprocessing import Pool
+    import argparse
+
     parser = argparse.ArgumentParser()
     parser.add_argument("filename")
     parser.add_argument("-b", "--batch", action="store_true")
